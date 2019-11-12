@@ -1,12 +1,13 @@
 import React, { useState, useReducer } from "react";
 
 import loginReducer from "./context/loginReducer";
+import peopleReducer from "./context/peopleReducer";
 
 import PeopleAdmin from "./components/PeopleAdmin";
 import PeopleLoader from "./components/PeopleLoader";
 
 function App() {
-  const [people, setPeople] = useState([]);
+  // const [people, setPeople] = useState([]);
   // const [userName, setUserName] = useState("anon");
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -16,9 +17,12 @@ function App() {
   });
   const { userName, isLoggedIn } = loginState;
 
+  const [people, dispatchPeople] = useReducer(peopleReducer, []);
+
   const handlePeopleLoaded = loadedPeople => {
-    const newPeople = [...people, ...loadedPeople];
-    setPeople(newPeople);
+    // const newPeople = [...people, ...loadedPeople];
+    // setPeople(newPeople);
+    dispatchPeople({ type: "append", payload: loadedPeople });
   };
 
   const handleLogin = () => {
