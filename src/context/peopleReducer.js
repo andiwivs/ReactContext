@@ -4,6 +4,10 @@ const peopleReducer = (state, action) => {
       return [...state, ...action.payload];
     }
 
+    case "clear": {
+      return [];
+    }
+
     default:
       return state;
   }
