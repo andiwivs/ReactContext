@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
+
+import loginReducer from "./context/loginReducer";
 
 import PeopleAdmin from "./components/PeopleAdmin";
 import PeopleLoader from "./components/PeopleLoader";
 
 function App() {
   const [people, setPeople] = useState([]);
-  const [userName, setUserName] = useState("anon");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [userName, setUserName] = useState("anon");
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const [loginState, dispatchLogin] = useReducer(loginReducer, {
+    userName: "anon",
+    isLoggedIn: false
+  });
+  const { userName, isLoggedIn } = loginState;
 
   const handlePeopleLoaded = loadedPeople => {
     const newPeople = [...people, ...loadedPeople];
@@ -14,13 +22,15 @@ function App() {
   };
 
   const handleLogin = () => {
-    setUserName("Fred Flintstone");
-    setIsLoggedIn(true);
+    dispatchLogin({ type: "login" });
+    // setUserName("Fred Flintstone");
+    // setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
-    setUserName("anon");
-    setIsLoggedIn(false);
+    dispatchLogin({ type: "logout" });
+    // setUserName("anon");
+    // setIsLoggedIn(false);
   };
 
   return (
