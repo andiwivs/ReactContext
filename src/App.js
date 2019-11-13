@@ -3,8 +3,12 @@ import React from "react";
 import PeopleAdmin from "./components/PeopleAdmin";
 import PeopleLoader from "./components/PeopleLoader";
 
-import { LOGIN_ACTIONS } from "./context/loginReducer";
-import { PEOPLE_ACTIONS } from "./context/peopleReducer";
+import {
+  LOGIN_ACTION_LOGIN,
+  LOGIN_ACTION_LOGOUT,
+  PEOPLE_ACTION_APPEND,
+  PEOPLE_ACTION_CLEAR
+} from "./context/actions";
 
 import { useStateValue } from "./context/StateProvider";
 
@@ -12,16 +16,16 @@ function App() {
   const [{ login, people }, dispatch] = useStateValue();
 
   const handlePeopleLoaded = loadedPeople => {
-    dispatch({ type: PEOPLE_ACTIONS.APPEND, payload: loadedPeople });
+    dispatch({ type: PEOPLE_ACTION_APPEND, payload: loadedPeople });
   };
 
   const handleLogin = () => {
-    dispatch({ type: LOGIN_ACTIONS.LOGIN });
+    dispatch({ type: LOGIN_ACTION_LOGIN });
   };
 
   const handleLogout = () => {
-    dispatch({ type: LOGIN_ACTIONS.LOGOUT });
-    dispatch({ type: PEOPLE_ACTIONS.CLEAR });
+    dispatch({ type: LOGIN_ACTION_LOGOUT });
+    dispatch({ type: PEOPLE_ACTION_CLEAR });
   };
   return (
     <>

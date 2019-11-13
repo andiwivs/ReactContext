@@ -1,15 +1,12 @@
-export const PEOPLE_ACTIONS = {
-  APPEND: "people.append",
-  CLEAR: "people.clear"
-};
+import { PEOPLE_ACTION_APPEND, PEOPLE_ACTION_CLEAR } from "./actions";
 
 const peopleReducer = (state, action) => {
   switch (action.type) {
-    case PEOPLE_ACTIONS.APPEND: {
+    case PEOPLE_ACTION_APPEND: {
       return [...state, ...action.payload];
     }
 
-    case PEOPLE_ACTIONS.CLEAR: {
+    case PEOPLE_ACTION_CLEAR: {
       return [];
     }
 
