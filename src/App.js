@@ -1,38 +1,33 @@
-import React, { useReducer } from "react";
-
-import loginReducer from "./context/loginReducer";
-import peopleReducer from "./context/peopleReducer";
+import React from "react";
 
 import PeopleAdmin from "./components/PeopleAdmin";
 import PeopleLoader from "./components/PeopleLoader";
 
-function App() {
-  const [loginState, dispatchLogin] = useReducer(loginReducer, {
-    userName: "anon",
-    isLoggedIn: false
-  });
-  const { userName, isLoggedIn } = loginState;
+import { LOGIN_ACTIONS } from "./context/loginReducer";
+import { PEOPLE_ACTIONS } from "./context/peopleReducer";
 
-  const [people, dispatchPeople] = useReducer(peopleReducer, []);
+import { useStateValue } from "./context/StateProvider";
+
+function App() {
+  const [{ login, people }, dispatch] = useStateValue();
 
   const handlePeopleLoaded = loadedPeople => {
-    dispatchPeople({ type: "append", payload: loadedPeople });
+    dispatch({ type: PEOPLE_ACTIONS.APPEND, payload: loadedPeople });
   };
 
   const handleLogin = () => {
-    dispatchLogin({ type: "login" });
+    dispatch({ type: LOGIN_ACTIONS.LOGIN });
   };
 
   const handleLogout = () => {
-    dispatchLogin({ type: "logout" });
-    dispatchPeople({ type: "clear" });
+    dispatch({ type: LOGIN_ACTIONS.LOGOUT });
+    dispatch({ type: PEOPLE_ACTIONS.CLEAR });
   };
-
   return (
     <>
-      {isLoggedIn && (
+      {login.isLoggedIn && (
         <div>
-          Hello, {userName}
+          Hello, {login.userName}
           <button onClick={handleLogout}>Log out</button>
           <div>
             <PeopleAdmin people={people} />
@@ -40,7 +35,7 @@ function App() {
           </div>
         </div>
       )}
-      {!isLoggedIn && <button onClick={handleLogin}>Log in</button>}
+      {!login.isLoggedIn && <button onClick={handleLogin}>Log in</button>}
     </>
   );
 }

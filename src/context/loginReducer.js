@@ -1,6 +1,11 @@
+export const LOGIN_ACTIONS = {
+  LOGIN: "login.login",
+  LOGOUT: "login.logout"
+};
+
 const loginReducer = (state, action) => {
   switch (action.type) {
-    case "login": {
+    case LOGIN_ACTIONS.LOGIN: {
       return {
         ...state,
         isLoggedIn: true,
@@ -8,7 +13,7 @@ const loginReducer = (state, action) => {
       };
     }
 
-    case "logout": {
+    case LOGIN_ACTIONS.LOGOUT: {
       return {
         ...state,
         isLoggedIn: false,

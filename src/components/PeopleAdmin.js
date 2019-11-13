@@ -4,7 +4,7 @@ const PeopleAdmin = ({ people }) => {
   return (
     <div>
       {people.map(p => (
-        <div>{p.name}</div>
+        <div key={p.id}>{p.name}</div>
       ))}
     </div>
   );
